@@ -1,0 +1,58 @@
+<div id="wrapper">
+    <div class="panel-body">
+        <mat-toolbar>
+            <h2>LOG IN</h2>
+            <span class="fill-remaining-space"></span>
+
+            <button class="btn-dialog-close" mat-stroked-button (click)="onClick()" tabindex="-1">
+                <mat-icon>clear</mat-icon>
+            </button>
+        </mat-toolbar>
+        <div *ngIf="isLoginError" class="red-text center error-message">
+            <i>error</i> Incorrect username or password
+        </div>
+
+        <form #loginForm="ngForm" class="white" (ngSubmit)="onSubmit(UserName.value,Password.value)">
+
+            <div class="input-field col s12 row">
+
+                <mat-form-field class="example-full-width">
+                    <span matPrefix class="material-icons">account_circle &nbsp;</span>
+                    <input type="text" #UserName ngModel matInput name="UserName" placeholder="Username">
+
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <span matPrefix class="material-icons">lock &nbsp;</span>
+                    <input type="password" #Password matInput ngModel name="Password" placeholder="Password">
+
+                </mat-form-field>
+
+            </div>
+
+
+            <!-- <div class="flex-1">
+                <H1 class="text-align-center">OR</H1>
+            </div>
+
+
+            <form [formGroup]="logInbyPN" class="white" (ngSubmit)="onSubmitPN(patientNo.value,OnlineCode.value)">
+                <div class="flex-1">
+                    <mat-form-field class="example-full-width">
+                        <span matPrefix class="material-icons">phone &nbsp;</span>
+                        <input #patientNo formControlName="patientNo" type="text" maxlength="11" placeholder="Patient No" matInput>
+
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <span matPrefix class="material-icons">mail_outline &nbsp;</span>
+                        <input #OnlineCode formControlName="OnlineCode" type="text" placeholder="Online Code" matInput>
+
+                    </mat-form-field>
+                </div>
+            </form> -->
+            <div cmat-dialog-actions>
+                <button class="btn btn-outline-success btn-block" type="submit" [disabled]="!loginForm.valid">ENTER</button>
+            </div>
+        </form>
+
+    </div>
+</div>

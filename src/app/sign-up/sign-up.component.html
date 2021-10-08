@@ -1,0 +1,74 @@
+<div id="wrapper" class="container ">
+    <div class="panel-body panelcss">
+        <mat-toolbar>
+            <h2>User Registration</h2>
+            <span class="fill-remaining-space"></span>
+
+            <!-- <button class="btn-dialog-close" mat-stroked-button tabindex="-1">
+                <mat-icon>clear</mat-icon>
+            </button> -->
+        </mat-toolbar>
+        <form [formGroup]="SIGNUPDETAIL" class="example-form formCSS" [style.fontSize.px]="14">
+            <mat-form-field class="flex-1 example-full-width">
+
+                <span matPrefix class="material-icons">account_circle &nbsp;</span>
+                <input formControlName="name" type="text" placeholder="Name" matInput required>
+                <mat-error>This field is mandatory.</mat-error>
+
+            </mat-form-field>
+
+
+            <div class="flex-1">
+                <mat-form-field class="example-half-width">
+                    <span matPrefix class="material-icons">groups &nbsp;</span>
+                    <input formControlName="age" type="text" maxlength="2" placeholder="age in years" matInput required>
+                    <mat-error>This field is mandatory.</mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-half-width">
+                    <span matPrefix class="material-icons">wc &nbsp;</span>
+                    <mat-select formControlName="gender" placeholder="Gender">
+                        <ng-container>
+                            <mat-option value="Male">Male</mat-option>
+                            <mat-option value="Female">Female</mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error>Select your Gender</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex-1">
+                <mat-form-field class="example-half-width">
+                    <span matPrefix class="material-icons">phone &nbsp;</span>
+                    <input formControlName="phoneNo" type="text" maxlength="11" placeholder="Phone No" matInput required>
+                    <mat-error>This field is mandatory.</mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-half-width">
+                    <span matPrefix class="material-icons">mail_outline &nbsp;</span>
+                    <input formControlName="emailAdd" type="email" placeholder="Email Address" matInput required>
+                    <mat-error>This field is mandatory.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="flex-1">
+                <mat-form-field class="example-full-width">
+                    <span matPrefix class="material-icons">lock &nbsp;</span>
+                    <input formControlName="password" type="password" placeholder="Password" matInput required>
+                    <mat-error>This field is mandatory.</mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field class="example-full-width">
+                    <span matPrefix class="material-icons">lock &nbsp;</span>
+                    <input formControlName="cpassword" type="text" placeholder="Confirm Password" matInput>
+                </mat-form-field> -->
+            </div>
+
+
+            <div class="form-group flex-1 bg-info">
+
+                <p class="col-md-6"></p>
+                <button class="btn btn-outline-danger col-md-4" (click)="onSubmit(SIGNUPDETAIL)" [disabled]="SIGNUPDETAIL.invalid">Save</button>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
