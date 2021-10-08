@@ -19,14 +19,14 @@ export class SignUpComponent implements OnInit {
     emailAdd: new FormControl(''),
     password: new FormControl(''),
   })
-  constructor(public gservice:LabservicsService,private notificationService: NotificationService,
+  constructor(public gservice:LabservicsService,private notificationService: NotificationService,public dialogRef: MatDialogRef<SignUpComponent>
     ) { }
   ngOnInit(): void {
   }
   onSubmit(SIGNUPDETAIL: FormGroup) {
     if (this.SIGNUPDETAIL.valid) {
       this.gservice.UserData = this.SIGNUPDETAIL.getRawValue()
-      //console.log(this.gservice.UserData)
+      console.log(this.gservice.UserData)
       this.gservice.userSignUp().subscribe(Response => {
 
         if (Response != 0) {
@@ -38,11 +38,11 @@ export class SignUpComponent implements OnInit {
         }
       })
       // this.resetForm();
-      //this.dialogRef.close();
+      this.dialogRef.close();
     }
   }
-  // onClick(): void {
-  //   this.dialogRef.close();
-  // }
+  onClick(): void {
+    this.dialogRef.close();
+  }
 }
 
