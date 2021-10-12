@@ -9,7 +9,9 @@ import { signup } from './registration.model';
 })
 export class LabservicsService {
   UserData : signup
-  LabTestData: Testbooking
+  // LabTestData: Testbooking[]
+  LabTestData:Testbooking
+  
   readonly rootUrl = 'http://localhost:7569/';
   constructor(private http: HttpClient) { }
   private subject = new Subject<any>();
@@ -44,7 +46,7 @@ export class LabservicsService {
   getClickEvent1(): Observable<any> {
     return this.subject.asObservable();
   }
-  Labtestnooking() {
+  LabtestBooking() {
     var body = {
       ...this.LabTestData,
     };

@@ -2,13 +2,16 @@ export class Labtest {
     testcode : number;
     testname : string;
     rate : number;
-    speciman : string;
+    specimen : string;
 }
 export class Testbooking {
     name:string;
     age: number;
-    // gender:string;
     phoneNo: string;
-    test: string;
+    Prescription:string;
+    Test: string;
+    address: string;
+    totalBill:number
+    
 }
 

@@ -13,7 +13,7 @@
                         <li class=""><a href="">Home</a></li>
                         <li><a href="#about">About Us</a></li>
 
-                        <li class="drop-down "><a href="">Lab</a>
+                        <li class="drop-down"><a href="">Lab</a>
                             <ul>
                                 <li><a href="#services">Services</a></li>
                                 <li><a href="#portfolio">Departments</a></li>
@@ -24,12 +24,21 @@
                         <li><a (click)="bookingDialogue()">Book Lab Test</a></li>
                         <li><a href="http://182.180.114.149:1260/lims/patients/login.aspx">Online Reports</a></li>
 
-                        <li><a (click)="signInDialogue()">signin</a></li>
-                        <li><a (click)="signUpDialogue()">Signup</a></li>
-                        <!-- <div *ngIf='loginchk?.length > 3' class="bg-info">
-                            
-                        </div> -->
+                        <li *ngIf="loginchk == null" class="drop-down">
+                            <a>User Menu</a>
+                            <ul>
+                                <li><a (click)="signInDialogue()">signin</a></li>
+                                <li><a (click)="signUpDialogue()">Signup</a></li>
+                            </ul>
+                        </li>
+                        <li *ngIf="loginchk!= null" class="drop-down">
+                            <a href="">Welcome {{this.loginchk}}</a>
+                            <ul>
+                                <li><a (click)="logout()">logout</a></li>
+                            </ul>
+                        </li>
                     </ul>
+
 
 
                 </nav>

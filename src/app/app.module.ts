@@ -24,7 +24,7 @@ import { AvailibeTestsComponent } from './availibe-tests/availibe-tests.componen
 import { SigninComponent } from './signin/signin.component';
 import { BookLabTestComponent } from './book-lab-test/book-lab-test.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +54,8 @@ import { FooterComponent } from './footer/footer.component';
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxMatFileInputModule
   ],
   entryComponents:[
     SignUpComponent

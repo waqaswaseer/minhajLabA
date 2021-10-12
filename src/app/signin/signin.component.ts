@@ -14,10 +14,6 @@ export class SigninComponent implements OnInit {
   message: string;
   isLoginError: boolean = false;
   userClaims: any;
-  logInbyPN = new FormGroup({
-    patientNo: new FormControl(''),
-    OnlineCode: new FormControl('')
-  });
   
   constructor(private permissionService: PermissionService, private router: Router,public dialogRef: MatDialogRef<SigninComponent> ) { }
 
@@ -27,14 +23,15 @@ export class SigninComponent implements OnInit {
     // let userloging = sessionStorage.getItem('susername');
     // console.log(userloging);
     // console.log('anaya');
-    localStorage.clear();
-    localStorage.removeItem('username');
-    sessionStorage.clear();
+    // localStorage.clear();
+    // localStorage.removeItem('username');
+    // sessionStorage.clear();
   }
   onSubmit(userName:any, password:any) {
     let userloging = localStorage.getItem('username');
     this.permissionService.userAuthentication(userName, password).subscribe((data: any) => {
       localStorage.setItem('userToken', data.access_token);
+      localStorage.setItem('username',userName)
       this.permissionService.getUserClaims().subscribe((data: any) => {
         this.userClaims = data;
         this.permissionService.userloging = this.userClaims.name;
@@ -51,9 +48,8 @@ export class SigninComponent implements OnInit {
       //  this.permissionService.GetMenuData(this.userClaims.usercode,"L");
       //  this.permissionService.GetSubMenuData(this.userClaims.usercode,"L");
       this.router.navigate(['/Booklabtest']);
-        this.dialogRef.close();
       alert("log in successfully")
-
+      this.dialogRef.close();
       //this.toastr.success(data.access_token);
     },
       (err: HttpErrorResponse) => {
