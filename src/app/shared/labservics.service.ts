@@ -11,7 +11,7 @@ export class LabservicsService {
   UserData : signup
   // LabTestData: Testbooking[]
   LabTestData:Testbooking
-  
+  Bucket :Testbooking[] = [] ;
   readonly rootUrl = 'http://localhost:7569/';
   constructor(private http: HttpClient) { }
   private subject = new Subject<any>();
@@ -39,7 +39,6 @@ export class LabservicsService {
   }
 
   // ===============================  LabTest Booking =================================
-
   sendClickEvent1() {
     this.subject.next(0);
   }
@@ -52,5 +51,13 @@ export class LabservicsService {
     };
     console.log(body)
     return this.http.post(this.rootUrl + 'api/booklabtest', body);
+  }
+  updateGTotal():number {
+
+    let sum = this.Bucket.reduce((prev:any,curr)=>{
+      return (prev.rate) + (curr.rate);
+    },0)
+    return sum
+    
   }
 }

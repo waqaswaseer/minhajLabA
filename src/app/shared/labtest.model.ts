@@ -10,8 +10,8 @@ export class Testbooking {
     phoneNo: string;
     Prescription:string;
     Test: string;
+    rate:number
     address: string;
-    totalBill:number
-    
+    totalBill:number    
 }
 

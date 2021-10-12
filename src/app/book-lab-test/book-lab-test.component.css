@@ -25,6 +25,11 @@
     flex-wrap: wrap;
 }
 
+.form2 {
+    background-color: yellowgreen;
+    min-height: 200px;
+}
+
 @media screen and (max-width: 800px) {
     .left,
     .main,

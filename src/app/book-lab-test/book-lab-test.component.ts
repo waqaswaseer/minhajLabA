@@ -18,7 +18,7 @@ import { PermissionService } from '../shared/permission.service';
 export class BookLabTestComponent implements OnInit {
   allTest: Labtest[]
   filteredOptions: Observable<Labtest[]>;
-  list: any;
+  //Bucket :Testbooking[] = [] ;
   userClaims: any;
   constructor(public gservice: LabservicsService, private notificationService: NotificationService, private permissionService: PermissionService,) { }
 
@@ -30,7 +30,8 @@ export class BookLabTestComponent implements OnInit {
   Prescription: ImageData;
   address: string;
   test = new FormControl('');
-
+  rate = new FormControl(0);
+  totalBill = new FormControl(0)
   //======================== Labtest Object in array======================// 
 
   //======================== pushing Object in array End here ======================// 
@@ -41,17 +42,18 @@ export class BookLabTestComponent implements OnInit {
       phoneNo: new FormControl(''),
       Prescription: new FormControl(''),
       Test: new FormControl(''),
-      address: new FormControl('')
+      rate: new FormControl(0),
+      address: new FormControl(''),
+      totalBill : new FormControl(0)
+
     })
     console.log(this.username)
     this.gservice.GetAlllabtest().subscribe((res: any) => {
-      this.allTest = res;
       this.filteredOptions = this.test.valueChanges.pipe(startWith(''), map(value => this.filter(value)))
+      this.allTest = res;
     })
     this.permissionService.getUserClaims().subscribe((data: any) => {
       this.userClaims = data;
-      //this.user = this.userClaims.name;
-      // console.log(this.permissionService.userloging);
     })
 
   }
@@ -61,7 +63,10 @@ export class BookLabTestComponent implements OnInit {
   }
   testselecion(event: MatAutocompleteSelectedEvent) {
     const selectedValue = event.option.value;
+    let total = this.gservice.updateGTotal();
     this.BookLabTest.controls["Test"].setValue(selectedValue.testname);
+    this.BookLabTest.controls["rate"].setValue(selectedValue.rate);
+    this.BookLabTest.controls["totalBill"].setValue(total)
   }
 
   resetpage() {
@@ -74,13 +79,6 @@ export class BookLabTestComponent implements OnInit {
     if (this.BookLabTest.valid) {
       this.gservice.LabTestData = this.BookLabTest.getRawValue()
       console.log(this.gservice.LabTestData)
-
-      //============================ pushing Object in array ============================// 
-      // this.gservice.LabTestData.push(this.BookLabTest.getRawValue())
-      // this.gservice.LabTestData.push(this.BookLabTest.getRawValue())
-      // console.log(this.gservice.LabTestData)
-      //======================== pushing Object in array End here ======================// 
-
       this.gservice.LabtestBooking().subscribe(Response => {
         if (Response != 0) {
           console.log(Response.toString());
@@ -94,6 +92,18 @@ export class BookLabTestComponent implements OnInit {
       //console.log(this)
     }
   }
+
+  addtoBucket(BookLabTest: FormGroup){
+    if (this.BookLabTest.valid) {
+      this.gservice.LabTestData = this.BookLabTest.getRawValue()
+      this.gservice.Bucket.push(this.gservice.LabTestData)    
+      this.gservice.updateGTotal()  
+      console.log(this.gservice.Bucket)
+    }
+   
+  }
+
+  
 
   clearpage() {
     alert('do i clear this page')
