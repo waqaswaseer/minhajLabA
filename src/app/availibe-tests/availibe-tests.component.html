@@ -4,3 +4,113 @@
     <td>{{item.rate}}</td>
     <td>{{item.specimen}}</td>
 </tr> -->
+<!-- 
+<form [formGroup]="BookLabTest" class="example-form" [style.fontSize.px]="14">
+    <input formControlName="totalBill" type="text" placeholder="totalBill" matInput hidden>
+    <input formControlName="BookedTests" type="text" placeholder="BookedTests" matInput hidden>
+    <div class="flex-1">
+        <mat-form-field class="example-full-width">
+            <span matPrefix class="material-icons">account_circle &nbsp;</span>
+            <input formControlName="name" type="text" placeholder="Name" matInput>
+            <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="flex-1">
+        <mat-form-field class="example-full-width">
+            <span matPrefix class="material-icons">groups &nbsp;</span>
+            <input formControlName="age" type="text" maxlength="3" placeholder="age" matInput>
+            <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="flex-1">
+        <mat-form-field class="example-full-width">
+            <span matPrefix class="material-icons">phone &nbsp;</span>
+            <input formControlName="phoneNo" type="text" maxlength="11" placeholder="Phone No" matInput>
+            <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="flex-1">
+        <mat-form-field class="example-full-width">
+            <span matPrefix class="material-icons">place &nbsp;</span>
+            <input formControlName="address" type="text" placeholder="address" matInput>
+            <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="row example-full-width">
+        <mat-form-field class="mr-2 width-150px" appearance="fill">
+            <span matPrefix class="material-icons">biotech &nbsp;</span>
+            <input type="text" placeholder="Test" aria-label="Test" matInput [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="testselecion($event)">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option.testname}}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mt-2 pt-1">
+            <span matPrefix class="material-icons">monetization_on &nbsp;</span>
+            <input formControlName="rate" type="text" placeholder="Price" matInput readonly>
+        </mat-form-field>
+    </div>
+
+
+
+    <div class="input-group">
+        <mat-form-field class=" example-full-width ">
+            <span matPrefix class="material-icons">image &nbsp;</span>
+            <ngx-mat-file-input formControlName="Prescription" accept="image/* " placeholder="Upload Doctor Prescription">
+            </ngx-mat-file-input>
+        </mat-form-field>
+
+    </div>
+
+
+    <div class="mr-2 ml-2 mt-3 input-group-append justify-content-center row ">
+        <button class="btn btn-outline-danger " [disabled]="BookLabTest.invalid ">ADD TO BUCKET</button>
+    </div>
+
+
+
+</form> -->
+
+<!-- 
+<form class="example-form form2" [style.fontSize.px]="14 ">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Test Name</th>
+                <th scope="col">Test Rate</th>
+
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="this.gservice.Bucket.length==0" [class.text-danger]="this.gservice.Bucket.length==0">
+                <td class="font-italic text-center mt-5" colspan="5">
+                    No test is Selected yet
+                </td>
+            </tr>
+            <tr *ngFor="let test of this.gservice.Bucket; let i = index">
+                <td class="tdbooktest">{{test.Test}}</td>
+                <td class="">{{test.rate}}</td>
+
+                <td class="">
+                    <a class="btn btn-sm btn-danger ml-4 text-white">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">Total Bill</th>
+                <td colspan="3">{{totalBilli}}</td>
+            </tr>
+            <tr class="footer">
+                <td colspan="5">* Select at least 5 Test please</td>
+            </tr>
+        </tfoot>
+    </table>
+</form> -->

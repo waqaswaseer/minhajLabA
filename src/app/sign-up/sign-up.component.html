@@ -4,9 +4,9 @@
             <h2>User Registration</h2>
             <span class="fill-remaining-space"></span>
 
-            <!-- <button class="btn-dialog-close" mat-stroked-button tabindex="-1">
+            <button class="btn-dialog-close" (click)="onClick()" mat-stroked-button tabindex="-1">
                 <mat-icon>clear</mat-icon>
-            </button> -->
+            </button>
         </mat-toolbar>
         <form [formGroup]="SIGNUPDETAIL" class="example-form formCSS" [style.fontSize.px]="14">
             <mat-form-field class="flex-1 example-full-width">

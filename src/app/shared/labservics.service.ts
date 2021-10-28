@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Labtest, Testbooking } from './labtest.model';
+import {  Labtest, Orderdetails } from './labtest.model';
 import { signup } from './registration.model';
 
 @Injectable({
@@ -9,9 +9,8 @@ import { signup } from './registration.model';
 })
 export class LabservicsService {
   UserData : signup
-  // LabTestData: Testbooking[]
-  LabTestData:Testbooking
-  Bucket :Testbooking[] = [] ;
+  Orderdetails : Orderdetails
+
   readonly rootUrl = 'http://localhost:7569/';
   constructor(private http: HttpClient) { }
   private subject = new Subject<any>();
@@ -29,7 +28,6 @@ export class LabservicsService {
     var body = {
       ...this.UserData,
     };
-    //console.log(body)
     return this.http.post(this.rootUrl + 'api/signup', body);
   }
   // ===============================  Availible LabTests  =================================
@@ -38,6 +36,20 @@ export class LabservicsService {
     return this.http.get<Labtest[]>(this.rootUrl + 'api/labtest');
   }
 
+   // ===============================  Order Details booked  =================================
+
+   GetOrderdetails(username:string|null):Observable<Orderdetails[]> {
+    return this.http.get<Orderdetails[]>(this.rootUrl + 'api/booktests'+"/"+username);
+  }
+
+  
+   // ===============================  add to bucket  =================================
+
+   addtobucket() {
+    return this.http.post(this.rootUrl + 'api/addbucket/', this.Orderdetails);
+  }
+
+  // =============================== ending add to bucket =================================
   // ===============================  LabTest Booking =================================
   sendClickEvent1() {
     this.subject.next(0);
@@ -45,19 +57,11 @@ export class LabservicsService {
   getClickEvent1(): Observable<any> {
     return this.subject.asObservable();
   }
-  LabtestBooking() {
+  Orderdetailsfn() {
     var body = {
-      ...this.LabTestData,
+      ...this.Orderdetails,
     };
     console.log(body)
-    return this.http.post(this.rootUrl + 'api/booklabtest', body);
-  }
-  updateGTotal():number {
-
-    let sum = this.Bucket.reduce((prev:any,curr)=>{
-      return (prev.rate) + (curr.rate);
-    },0)
-    return sum
-    
+    return this.http.post(this.rootUrl + 'api/orderdetails', body);
   }
 }

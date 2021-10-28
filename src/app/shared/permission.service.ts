@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class PermissionService {
   userloging : string ='';
+  userid : number = 0;
   readonly rootUrl = 'http://localhost:7569/';
   constructor(private http: HttpClient) { }
 
@@ -15,7 +16,11 @@ export class PermissionService {
     return this.http.post(this.rootUrl + 'token', data, { headers: reqHeader });
   }
   getUserClaims(){
-    return  this.http.get(this.rootUrl+'api/GetUserClaims',{headers : new HttpHeaders(
+    return this.http.get(this.rootUrl+'api/GetUserClaims',{headers : new HttpHeaders(
       {'Authorization' : 'Bearer ' + localStorage.getItem('userToken')})});
    }
+  
+  getuserid(username: string | null){
+    return this.http.get(this.rootUrl + 'api/getUid/'+ username)
+  }
 }

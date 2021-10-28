@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth-guard';
-import { AvailibeTestsComponent } from './availibe-tests/availibe-tests.component';
 import { BookLabTestComponent } from './book-lab-test/book-lab-test.component';
 import { HomeComponent } from './home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';

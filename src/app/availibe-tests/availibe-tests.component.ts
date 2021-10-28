@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LabservicsService } from '../shared/labservics.service';
-import { Labtest, Testbooking } from '../shared/labtest.model';
+import { Labtest } from '../shared/labtest.model';
 
 @Component({
   selector: 'app-availibe-tests',

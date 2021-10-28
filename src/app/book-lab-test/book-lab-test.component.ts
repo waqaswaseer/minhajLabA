@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { LabservicsService } from '../shared/labservics.service';
 import { NotificationService } from '../shared/notification.service';
 import { map, startWith } from 'rxjs/operators';
-import { Labtest, Testbooking } from '../shared/labtest.model';
+import { Labtest, Orderdetails } from '../shared/labtest.model';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { PermissionService } from '../shared/permission.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-lab-test',
@@ -17,98 +18,91 @@ import { PermissionService } from '../shared/permission.service';
 })
 export class BookLabTestComponent implements OnInit {
   allTest: Labtest[]
-  filteredOptions: Observable<Labtest[]>;
-  //Bucket :Testbooking[] = [] ;
-  userClaims: any;
-  constructor(public gservice: LabservicsService, private notificationService: NotificationService, private permissionService: PermissionService,) { }
-
+  orderdetails: Orderdetails[]
+  userId:any;
   // ============================= working  on form as global variables ================================
-  BookLabTest: FormGroup;
-  name: string;
-  age: number;
-  phone: string;
-  Prescription: ImageData;
-  address: string;
-  test = new FormControl('');
-  rate = new FormControl(0);
-  totalBill = new FormControl(0)
-  //======================== Labtest Object in array======================// 
+  Orderdetails: FormGroup;
+  testcode= new FormControl();
+  Test= new FormControl('');
+  rate= new FormControl();
+  filteredOptions: Observable<Labtest[]>;
+  userClaims: any;
+  displayFn(subject: any): string {
+    return subject ? subject.testname : ''
+  }
+  constructor(public gservice: LabservicsService,
+     private notificationService: NotificationService, 
+    private permissionService: PermissionService,
+    private router: Router) { }
 
+  //======================== Labtest Object in array======================// 
+  //myBucket: FormGroup;
   //======================== pushing Object in array End here ======================// 
   ngOnInit(): void {
-    this.BookLabTest = new FormGroup({
-      name: new FormControl(this.username),
-      age: new FormControl(''),
-      phoneNo: new FormControl(''),
-      Prescription: new FormControl(''),
-      Test: new FormControl(''),
-      rate: new FormControl(0),
-      address: new FormControl(''),
-      totalBill : new FormControl(0)
-
-    })
-    console.log(this.username)
-    this.gservice.GetAlllabtest().subscribe((res: any) => {
-      this.filteredOptions = this.test.valueChanges.pipe(startWith(''), map(value => this.filter(value)))
-      this.allTest = res;
-    })
-    this.permissionService.getUserClaims().subscribe((data: any) => {
-      this.userClaims = data;
-    })
-
+    this.getPendingOrders()
+    this.createForm();
+  }
+  getPendingOrders(){
+    this.gservice.GetOrderdetails(this.username).subscribe((data: any) => {
+      this.orderdetails = data;
+    });
   }
 
+  // getuserID(){
+  //   return localStorage.getItem('userId')
+  // }
+  createForm(){
+    this.resetPage()
+    this.gservice.GetAlllabtest().subscribe((res: any) => {
+      this.allTest = res;
+      this.filteredOptions = this.Test.valueChanges.pipe(startWith(''), map(value => this.filter(value)));
+    });
+  }
   private filter(inputStr: string): Labtest[] {
     return this.allTest.filter(option => option.testname.toLowerCase().includes(inputStr))
   }
   testselecion(event: MatAutocompleteSelectedEvent) {
     const selectedValue = event.option.value;
-    let total = this.gservice.updateGTotal();
-    this.BookLabTest.controls["Test"].setValue(selectedValue.testname);
-    this.BookLabTest.controls["rate"].setValue(selectedValue.rate);
-    this.BookLabTest.controls["totalBill"].setValue(total)
+    this.Orderdetails.controls["testname"].setValue(selectedValue.testname);
+    this.Orderdetails.controls["rate"].setValue(selectedValue.rate);
+    this.Orderdetails.controls["testcode"].setValue(selectedValue.testcode);
   }
-
-  resetpage() {
-
-  }
-  displayFn(subject: any): string {
-    return subject ? subject.testname : ''
-  }
-  onSubmit(BookLabTest: FormGroup) {
-    if (this.BookLabTest.valid) {
-      this.gservice.LabTestData = this.BookLabTest.getRawValue()
-      console.log(this.gservice.LabTestData)
-      this.gservice.LabtestBooking().subscribe(Response => {
+  
+  addtoBucket(Orderdetails: FormGroup) {
+    if (this.Orderdetails.valid) {
+      this.gservice.Orderdetails = this.Orderdetails.getRawValue()
+      console.log(this.gservice.Orderdetails)
+      this.gservice.addtobucket().subscribe(Response => {
         if (Response != 0) {
-          console.log(Response.toString());
+         this.getPendingOrders()
           this.notificationService.success(':: Your order is placed successfully');
-          this.clearpage();
         }
         else {
           this.notificationService.warn(':: Invalid Data');
         }
       })
-      //console.log(this)
     }
+    this.resetPage()
   }
-
-  addtoBucket(BookLabTest: FormGroup){
-    if (this.BookLabTest.valid) {
-      this.gservice.LabTestData = this.BookLabTest.getRawValue()
-      this.gservice.Bucket.push(this.gservice.LabTestData)    
-      this.gservice.updateGTotal()  
-      console.log(this.gservice.Bucket)
-    }
-   
+  resetPage(){
+    this.Orderdetails = new FormGroup({
+      username: new FormControl(this.username),
+      userID: new FormControl(this.userId),
+      orderstatus : new FormControl('a'),
+      testcode: new FormControl(),
+      testname:  new FormControl(''),
+      rate: new FormControl(0),      
+      status: new FormControl('p', Validators.required),      
+      //address: new FormControl(''),
+    });
   }
-
-  
-
-  clearpage() {
-    alert('do i clear this page')
+  getUserId(username:string){
+    this.permissionService.getuserid(username).subscribe(res =>{
+      this.userId = res;
+    });
+    console.log(this.userId);
   }
-  get username(){
+  get username() {
     return localStorage.getItem('username')
   }
 }

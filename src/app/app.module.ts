@@ -1,6 +1,5 @@
 import {NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -25,6 +24,9 @@ import { SigninComponent } from './signin/signin.component';
 import { BookLabTestComponent } from './book-lab-test/book-lab-test.component';
 import { FooterComponent } from './footer/footer.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { AuthGuard } from './auth-guard';
+import { GmapComponent } from './gmap/gmap.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +37,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     SigninComponent,
     BookLabTestComponent,
     FooterComponent,
+    GmapComponent,
     
   ],
   imports: [
@@ -55,12 +58,15 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    
   ],
   entryComponents:[
     SignUpComponent
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent],
 
 })

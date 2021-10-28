@@ -7,10 +7,12 @@
 
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <a href=""><img src="assets/img/logo/minhajlogo1.png" alt="" class="img-fluid"></a>
-
-                <nav class="nav-menu d-none d-lg-block">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <nav class="nav-menu d-none d-lg-block collapse navbar-collapse" id="navbarNavDropdown">
                     <ul>
-                        <li><a>Home</a></li>
+                        <li><a (click)="home()">Home</a></li>
                         <li><a>About Us</a></li>
 
                         <li class="drop-down"><a href="">Lab</a>

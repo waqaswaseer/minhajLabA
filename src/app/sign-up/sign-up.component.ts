@@ -11,17 +11,11 @@ import { NotificationService } from '../shared/notification.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  SIGNUPDETAIL = new FormGroup({
-    name: new FormControl(''),
-    age: new FormControl(''),
-    gender: new FormControl(''),
-    phoneNo: new FormControl(''),
-    emailAdd: new FormControl(''),
-    password: new FormControl(''),
-  })
+  SIGNUPDETAIL : FormGroup;
   constructor(public gservice:LabservicsService,private notificationService: NotificationService,public dialogRef: MatDialogRef<SignUpComponent>
     ) { }
   ngOnInit(): void {
+    this.resetForm()
   }
   onSubmit(SIGNUPDETAIL: FormGroup) {
     if (this.SIGNUPDETAIL.valid) {
@@ -30,19 +24,28 @@ export class SignUpComponent implements OnInit {
       this.gservice.userSignUp().subscribe(Response => {
 
         if (Response != 0) {
-          //console.log(Response.toString());
           this.notificationService.success(':: Registered successfully');
         }
         else {
           this.notificationService.warn(':: Invalid Data');
         }
       })
-      // this.resetForm();
+      this.resetForm();
       this.dialogRef.close();
     }
   }
   onClick(): void {
     this.dialogRef.close();
+  }
+  resetForm(){
+    this.SIGNUPDETAIL = new FormGroup({
+      name: new FormControl(''),
+      age: new FormControl(''),
+      gender: new FormControl(''),
+      phoneNo: new FormControl(''),
+      emailAdd: new FormControl(''),
+      password: new FormControl(''),
+    })
   }
 }
 

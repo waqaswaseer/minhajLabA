@@ -4,10 +4,25 @@
     flex: 1 1 auto;
 }
 
+.footer {
+    text-align: center;
+    background: rgba(200, 249, 255, 0.692);
+}
+
+.tdbooktest {
+    width: 50%;
+    word-wrap: normal;
+}
+
 .text-align-center {
     text-align: center;
     font-weight: bolder;
     font-family: cursive;
+}
+
+tbody {
+    height: 250px;
+    min-height: 250px;
 }
 
 .example-full-width {
@@ -21,13 +36,13 @@
     justify-content: center;
     align-content: center;
     margin-top: 200px;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
 }
 
 .form2 {
-    background-color: yellowgreen;
-    min-height: 200px;
+    background-color: rgba(153, 205, 50, 0.219);
+    min-height: 300px;
 }
 
 @media screen and (max-width: 800px) {
@@ -35,6 +50,13 @@
     .main,
     .right {
         width: 100%;
+        /* The width is 100%, when the viewport is 800px or smaller */
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .tdbooktest {
+        width: 40%;
         /* The width is 100%, when the viewport is 800px or smaller */
     }
 }

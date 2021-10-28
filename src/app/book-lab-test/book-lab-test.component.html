@@ -4,44 +4,20 @@
         <mat-toolbar>
             <h2>Place your Test Booking</h2>
             <span class="fill-remaining-space"></span>
-            <!-- <button class="btn-dialog-close" mat-stroked-button (click)="onClick()" tabindex="-1">
-                <mat-icon>clear</mat-icon>
-            </button> -->
+
         </mat-toolbar>
-        <form [formGroup]="BookLabTest" class="example-form" [style.fontSize.px]="14">
-            <input formControlName="totalBill" type="text" placeholder="totalBill" matInput hidden>
-            <div class="flex-1">
-                <mat-form-field class="example-full-width">
-                    <span matPrefix class="material-icons">account_circle &nbsp;</span>
-                    <input formControlName="name" type="text" placeholder="Name" matInput required>
-                    <mat-error>This field is mandatory.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="flex-1">
-                <mat-form-field class="example-full-width">
-                    <span matPrefix class="material-icons">groups &nbsp;</span>
-                    <input formControlName="age" type="text" maxlength="3" placeholder="age" matInput required>
-                    <mat-error>This field is mandatory.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="flex-1">
-                <mat-form-field class="example-full-width">
-                    <span matPrefix class="material-icons">phone &nbsp;</span>
-                    <input formControlName="phoneNo" type="text" maxlength="11" placeholder="Phone No" matInput required>
-                    <mat-error>This field is mandatory.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="flex-1">
-                <mat-form-field class="example-full-width">
-                    <span matPrefix class="material-icons">place &nbsp;</span>
-                    <input formControlName="address" type="text" placeholder="address" matInput required>
-                    <mat-error>This field is mandatory.</mat-error>
-                </mat-form-field>
-            </div>
+        <form [formGroup]="Orderdetails" class="example-form form2 " [style.fontSize.px]="14">
+            <input formControlName="username" type="text" matInput hidden>
+            <input formControlName="userID" type="text" matInput hidden>
+            <input formControlName="orderstatus" type="text" matInput hidden>
+            <input formControlName="testcode" type="text" matInput hidden>
+            <input formControlName="rate" type="text" matInput hidden>
+            <input formControlName="status" type="text" matInput hidden>
+
             <div class="row example-full-width">
                 <mat-form-field class="mr-2 width-150px" appearance="fill">
                     <span matPrefix class="material-icons">biotech &nbsp;</span>
-                    <input type="text" placeholder="Test" aria-label="Test" matInput [matAutocomplete]="auto" required>
+                    <input type="text" placeholder="Test" aria-label="Test" matInput [formControl]="Test" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="testselecion($event)">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                             {{option.testname}}
@@ -52,51 +28,64 @@
 
                 <mat-form-field class="mt-2 pt-1">
                     <span matPrefix class="material-icons">monetization_on &nbsp;</span>
-                    <input formControlName="rate" type="text" placeholder="Price" matInput readonly>
+                    <input formControlName="rate" type="text" placeholder="Price" value="0" matInput readonly>
                 </mat-form-field>
             </div>
-
-
-
-            <div class="input-group">
-                <mat-form-field class=" example-full-width ">
-                    <span matPrefix class="material-icons">image &nbsp;</span>
-                    <ngx-mat-file-input formControlName="Prescription" accept="image/* " placeholder="Upload Doctor Prescription">
-                    </ngx-mat-file-input>
+            <div class="example-full-width">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select status</mat-label>
+                    <select matNativeControl required formControlName="status">
+                      <option label="--select something --"></option>
+                      <option value="p">Pending</option>
+                      <!-- <option value="I">Inactive</option> -->
+                    </select>
+                    <!-- <mat-error *ngIf="status.hasError('required')">
+                        This field is required
+                    </mat-error> -->
                 </mat-form-field>
-
             </div>
-
-
-            <div class="mr-2 ml-2 mt-3 input-group-append justify-content-center row ">
-                <button class="btn btn-outline-danger " (click)="addtoBucket(BookLabTest) " [disabled]="BookLabTest.invalid ">ADD TO BUCKET</button>
-            </div>
-
-
 
         </form>
+        <div class="mr-2 ml-2 mt-3 input-group-append justify-content-center row ">
+            <button class="btn btn-outline-danger " (click)="addtoBucket(Orderdetails)" [disabled]="Orderdetails.invalid">Add to Cart</button>
+        </div>
     </div>
-    <div class="panel-body col-md-4 ">
+    <div class="panel-body col-md-6 ">
         <mat-toolbar>
             <h2>Your Cart</h2>
             <span class="fill-remaining-space "></span>
         </mat-toolbar>
         <form class="example-form form2" [style.fontSize.px]="14 ">
-            <tr class="table">
-                <th>Test Name</th>
-                <th>Test Rate</th>
-                <th>Total Bill</th>
-            </tr>
-            <tr *ngFor="let test of this.gservice.Bucket" class="table">
-                <td>{{test.Test}}</td>
-                <td>{{test.rate}}</td>
-                <td>{{test.totalBill}}</td>
-            </tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">test code</th>
+                        <th scope="col">test name</th>
+                        <th scope="col">rate</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="orderdetails?.length==0" [class.text-danger]="orderdetails?.length==0">
+                        <td class="font-italic text-center mt-5" colspan="5">
+                            No test is Selected yet
+                        </td>
+                    </tr>
+                    <tr *ngFor="let test of orderdetails">
+                        <td>{{test.testcode}}</td>
+                        <td>{{test.testname}}</td>
+                        <td>{{test.rate}}</td>
+                        <td>
+                            <a></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </form>
-
+        <!-- {{this.getuserID()}}userID -->
         <div class="mr-2 ml-2 mt-3 input-group-append justify-content-center row ">
-            <button class="btn btn-outline-success " (click)="onSubmit(BookLabTest) " [disabled]="BookLabTest.invalid ">Book Now</button>
+            <button class="btn btn-outline-success ">Book Now</button>
         </div>
     </div>
-
 </div>
+<app-gmap></app-gmap>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BookLabTestComponent } from '../book-lab-test/book-lab-test.component';
 import { PermissionService } from '../shared/permission.service';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { SigninComponent } from '../signin/signin.component';
@@ -18,18 +17,18 @@ export class HeaderComponent implements OnInit {
   userClaims: any;
   isLoggedIn$: Observable<boolean>;
   authService: any;
-  message:string;
-  username : string;
-  isloaded : Promise<boolean>
+  message: string;
+  username: string;
+  isloaded: Promise<boolean>
 
-  constructor(public dialog: MatDialog,public permissionService: PermissionService, private router: Router) { }
+  constructor(public dialog: MatDialog, public permissionService: PermissionService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.loginchk == 'username') {
       // console.log("one");
       localStorage.getItem('username');
     }
-    else {      
+    else {
       localStorage.removeItem("username");
     }
 
@@ -37,7 +36,7 @@ export class HeaderComponent implements OnInit {
   get loginchk(): any {
     return localStorage.getItem('username');
   }
-  
+
   signUpDialogue() {
     this.dialog.open(SignUpComponent);
   }
@@ -45,10 +44,15 @@ export class HeaderComponent implements OnInit {
     this.dialog.open(SigninComponent);
   }
   bookingDialogue() {
-    this.dialog.open(SigninComponent);
+    this.router.navigate(['/Booklabtest']);
   }
-  logout(){
+  logout() {
     localStorage.removeItem("username");
     this.router.navigate(['/home']);
   }
+  home() {
+    //localStorage.removeItem("username");
+    this.router.navigate(['/home']);
+  }
+ 
 }

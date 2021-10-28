@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { PermissionService } from '../shared/permission.service';
+import { signup } from '../shared/registration.model';
 
 @Component({
   selector: 'app-signin',
@@ -14,24 +16,18 @@ export class SigninComponent implements OnInit {
   message: string;
   isLoginError: boolean = false;
   userClaims: any;
-  
-  constructor(private permissionService: PermissionService, private router: Router,public dialogRef: MatDialogRef<SigninComponent> ) { }
+  loadData:Promise<boolean>
+  constructor(private permissionService: PermissionService, private router: Router, public dialogRef: MatDialogRef<SigninComponent>) { }
 
   ngOnInit() {
     this.permissionService.userloging = '';
-    // sessionStorage.setItem('susername', '');
-    // let userloging = sessionStorage.getItem('susername');
-    // console.log(userloging);
-    // console.log('anaya');
-    // localStorage.clear();
-    // localStorage.removeItem('username');
-    // sessionStorage.clear();
+    this.permissionService.userid = 0 ;
   }
-  onSubmit(userName:any, password:any) {
+  onSubmit(userName: any, password: any) {
     let userloging = localStorage.getItem('username');
     this.permissionService.userAuthentication(userName, password).subscribe((data: any) => {
       localStorage.setItem('userToken', data.access_token);
-      localStorage.setItem('username',userName)
+      localStorage.setItem('username', userName);
       this.permissionService.getUserClaims().subscribe((data: any) => {
         this.userClaims = data;
         this.permissionService.userloging = this.userClaims.name;
@@ -41,25 +37,18 @@ export class SigninComponent implements OnInit {
         localStorage.setItem('gender', this.userClaims.gender)
         localStorage.setItem('phoneNo', this.userClaims.phoneNo)
         localStorage.setItem('emailAdd', this.userClaims.emailAdd)
-        
         // this.permissionService.GetSubMenuData(this.userClaims.usercode, "p");
       });
-      //this.permissionService.changeMessage(this.userClaims.usercode);
-      //  this.permissionService.GetMenuData(this.userClaims.usercode,"L");
-      //  this.permissionService.GetSubMenuData(this.userClaims.usercode,"L");
+      //localStorage.setItem('userId',this.userId);
       this.router.navigate(['/Booklabtest']);
-      alert("log in successfully")
       this.dialogRef.close();
-      //this.toastr.success(data.access_token);
     },
       (err: HttpErrorResponse) => {
         this.isLoginError = true;
       });
   }
-  //onSubmitPN(patientNo:any,OnlineCode:any){
-
-  //}
-onClick(): void {
-  this.dialogRef.close();
-}
+  
+  onClick(): void {
+    this.dialogRef.close();
+  }
 }
